@@ -51,49 +51,29 @@ const Leaderboard = ({ users }) => {
             </span>
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-1 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-full"></div>
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-            {topThree.map((user) => (
-              <div
-                key={user._id}
-                className={`p-8 rounded-2xl text-center transition-all duration-500 hover:shadow-2xl hover:scale-105 relative overflow-hidden ${getRankStyle(user.rank)}`}
-              >
-                <div className="absolute inset-0 opacity-10">
-                  <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
-                  <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full bg-white transform -translate-x-6 translate-y-6"></div>
-                </div>
-                <div className="relative z-10">
-                  <div className="flex justify-center mb-4">
-                    <div className="p-3 bg-white bg-opacity-20 rounded-full">
-                      {getRankIcon(user.rank)}
-                    </div>
-                  </div>
-                  <div className="relative mb-4">
-                    <img
-                      src={user.avatarUrl}
-                      alt={user.name}
-                      className="w-20 h-20 rounded-full mx-auto border-4 border-white shadow-xl object-cover ring-4 ring-white ring-opacity-50"
-                    />
-                    <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-                      <span className="text-sm font-bold text-gray-800">#{user.rank}</span>
-                    </div>
-                  </div>
-                  <h3 className="font-bold text-xl mb-2 drop-shadow-sm">{user.name}</h3>
-                  <div className="bg-white bg-opacity-20 rounded-lg p-3 mb-2">
-                    <p className="text-3xl font-black drop-shadow-sm">
-                      {user.totalPoints.toLocaleString()}
-                    </p>
-                    <p className="text-sm font-medium opacity-90">points</p>
-                  </div>
-                  {user.rank === 1 && (
-                    <div className="mt-3">
-                      <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white bg-opacity-20 text-white">
-                        👑 Champion
-                      </span>
-                    </div>
-                  )}
-                </div>
+          
+          {/* Podium Layout - 1st in middle, 2nd left, 3rd right */}
+          <div className="flex flex-col sm:flex-row items-end justify-center gap-4 mb-8 px-2">
+            {/* 2nd Place - Left */}
+            {topThree[1] && (
+              <div className="order-1 sm:order-1 w-full sm:w-auto">
+                <PodiumCard user={topThree[1]} isSecond />
               </div>
-            ))}
+            )}
+            
+            {/* 1st Place - Center (Bigger) */}
+            {topThree[0] && (
+              <div className="order-2 sm:order-2 w-full sm:w-auto">
+                <PodiumCard user={topThree[0]} isFirst />
+              </div>
+            )}
+            
+            {/* 3rd Place - Right */}
+            {topThree[2] && (
+              <div className="order-3 sm:order-3 w-full sm:w-auto">
+                <PodiumCard user={topThree[2]} isThird />
+              </div>
+            )}
           </div>
         </div>
       )}
@@ -109,7 +89,7 @@ const Leaderboard = ({ users }) => {
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
           </div>
           <div className="space-y-4">
-            {remaining.map((user) => (
+            {remaining.map((user, index) => (
               <div
                 key={user._id}
                 className="group flex items-center gap-6 p-5 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200 hover:border-orange-300 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
@@ -138,6 +118,14 @@ const Leaderboard = ({ users }) => {
                     <span className="text-sm text-gray-500 font-medium">points</span>
                   </div>
                 </div>
+                <div className="text-right">
+                  <div className="flex flex-col items-center gap-1">
+                    <div className="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-orange-100 transition-colors duration-300">
+                      <Trophy className="w-4 h-4 text-gray-400 group-hover:text-orange-500 transition-colors duration-300" />
+                    </div>
+                    <span className="text-xs text-gray-400 font-medium">Rank</span>
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -158,6 +146,82 @@ const Leaderboard = ({ users }) => {
           </p>
         </div>
       )}
+    </div>
+  );
+};
+
+// Podium Card Component
+const PodiumCard = ({ user, isFirst, isSecond, isThird }) => {
+  const getCardStyle = () => {
+    if (isFirst) {
+      return 'bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white transform scale-110 shadow-2xl border-4 border-yellow-300 sm:w-80 w-full';
+    } else if (isSecond) {
+      return 'bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 text-white transform scale-105 shadow-xl border-4 border-gray-200 sm:w-72 w-full mt-4 sm:mt-8';
+    } else if (isThird) {
+      return 'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg border-4 border-orange-300 sm:w-72 w-full mt-4 sm:mt-8';
+    }
+    return 'bg-white border border-gray-200';
+  };
+
+  const getRankIcon = (rank) => {
+    switch (rank) {
+      case 1:
+        return <Crown className="w-6 h-6 text-yellow-500" />;
+      case 2:
+        return <Medal className="w-6 h-6 text-gray-400" />;
+      case 3:
+        return <Award className="w-6 h-6 text-orange-600" />;
+      default:
+        return null;
+    }
+  };
+
+  const avatarSize = isFirst ? 'w-24 h-24' : 'w-20 h-20';
+  const nameSize = isFirst ? 'text-2xl' : 'text-xl';
+  const pointsSize = isFirst ? 'text-4xl' : 'text-3xl';
+  const padding = isFirst ? 'p-8' : 'p-6';
+
+  return (
+    <div className={`${padding} rounded-2xl text-center transition-all duration-500 hover:shadow-2xl hover:scale-105 relative overflow-hidden ${getCardStyle()}`}>
+      {/* Decorative background pattern */}
+      <div className="absolute inset-0 opacity-10">
+        <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
+        <div className="absolute bottom-0 left-0 w-16 h-16 rounded-full bg-white transform -translate-x-6 translate-y-6"></div>
+      </div>
+      
+      <div className="relative z-10">
+        <div className="flex justify-center mb-4">
+          <div className="p-3 bg-white bg-opacity-20 rounded-full">
+            {getRankIcon(user.rank)}
+          </div>
+        </div>
+        <div className="relative mb-4">
+          <img
+            src={user.avatarUrl}
+            alt={user.name}
+            className={`${avatarSize} rounded-full mx-auto border-4 border-white shadow-xl object-cover ring-4 ring-white ring-opacity-50`}
+          />
+          <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
+            <span className="text-sm font-bold text-gray-800">#{user.rank}</span>
+          </div>
+        </div>
+        <h3 className={`font-bold ${nameSize} mb-2 drop-shadow-sm`}>{user.name}</h3>
+        <div className="bg-white bg-opacity-20 rounded-lg p-3 mb-2">
+          <p className={`${pointsSize} font-black drop-shadow-sm`}>
+            {user.totalPoints.toLocaleString()}
+          </p>
+          <p className="text-sm font-medium opacity-90">
+            points
+          </p>
+        </div>
+        {user.rank === 1 && (
+          <div className="mt-3">
+            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white bg-opacity-20 text-white">
+              👑 Champion
+            </span>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

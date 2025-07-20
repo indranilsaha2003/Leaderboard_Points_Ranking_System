@@ -2,6 +2,10 @@
 
 A modern, real-time points claiming and ranking system built with React.js frontend and Node.js backend. Users can claim random points and compete on a dynamic leaderboard with beautiful trophy-themed UI.
 
+## Live Link
+
+https://pointsrankingsystem.netlify.app/
+
 ## 🏆 Features
 
 ### Core Functionality
