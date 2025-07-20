@@ -61,27 +61,27 @@ A modern, real-time points claiming and ranking system built with React.js front
 
 ```
 points-ranking-system/
-├── server/                 # Backend (Node.js + Express)
-│   ├── models/            # MongoDB models
-│   │   ├── User.js        # User schema
-│   │   └── ClaimHistory.js # Claim history schema
-│   ├── routes/            # API routes
-│   │   ├── users.js       # User management endpoints
-│   │   └── claims.js      # Points claiming endpoints
-│   └── index.js           # Server entry point
-├── src/                   # Frontend (React.js)
-│   ├── components/        # React components
-│   │   ├── Header.jsx     # App header with branding
-│   │   ├── UserSelector.jsx # User selection and management
-│   │   ├── ClaimSection.jsx # Points claiming interface
-│   │   ├── Leaderboard.jsx # Rankings display
-│   │   └── ClaimHistory.jsx # History tracking
-│   ├── App.jsx           # Main app component
-│   ├── main.jsx          # React entry point
-│   └── index.css         # Global styles (Tailwind)
-├── package.json          # Dependencies and scripts
-├── vite.config.js        # Vite configuration
-└── README.md            # This file
+├── server/                     # Backend (Node.js + Express)
+│   ├── models/                 # MongoDB models
+│   │   ├── User.js             # User schema
+│   │   └── ClaimHistory.js     # Claim history schema
+│   ├── routes/                 # API routes
+│   │   ├── users.js            # User management endpoints
+│   │   └── claims.js           # Points claiming endpoints
+│   └── index.js                # Server entry point
+├── src/                        # Frontend (React.js)
+│   ├── components/             # React components
+│   │   ├── Header.jsx          # App header with branding
+│   │   ├── UserSelector.jsx    # User selection and management
+│   │   ├── ClaimSection.jsx    # Points claiming interface
+│   │   ├── Leaderboard.jsx     # Rankings display
+│   │   └── ClaimHistory.jsx    # History tracking
+│   ├── App.jsx                 # Main app component
+│   ├── main.jsx                # React entry point
+│   └── index.css               # Global styles (Tailwind)
+├── package.json                # Dependencies and scripts
+├── vite.config.js              # Vite configuration
+└── README.md                   # This file
 ```
 
 ## 🎮 How to Use
