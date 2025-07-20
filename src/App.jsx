@@ -36,7 +36,7 @@ function App() {
     
     setLoading(true);
     try {
-      const response = await fetch(import.meta.env.VITE_API_BASE_URL + '/api/users', {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + '/claims', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ function App() {
 
   const handleAddUser = async (name) => {
     try {
-      const response = await fetch('http://localhost:5000/api/users', {
+      const response = await fetch(import.meta.env.VITE_API_BASE_URL + '/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
