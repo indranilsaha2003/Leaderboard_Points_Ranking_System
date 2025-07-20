@@ -4,6 +4,8 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import userRoutes from './routes/users.js';
 import claimRoutes from './routes/claims.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
 dotenv.config();
 
@@ -58,4 +60,13 @@ app.use('/api/claims', claimRoutes);
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+});
+
+// Serve static files from dist
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use(express.static(path.join(__dirname, '../dist')));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'));
 });
