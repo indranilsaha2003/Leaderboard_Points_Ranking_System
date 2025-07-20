@@ -40,24 +40,25 @@ const Leaderboard = ({ users }) => {
           </h3>
           
           {/* Podium Layout - 1st in middle, 2nd left, 3rd right */}
+          {/* Using grid for responsive column layout and order for visual podium effect */}
           <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-8 items-end"> {/* Adjusted gap for mobile */}
-            {/* 2nd Place - Left */}
+            {/* 2nd Place - Left (order-1 on both mobile and desktop) */}
             {topThree[1] && (
-              <div className="order-2 sm:order-1 flex justify-center">
+              <div className="order-1 flex justify-center">
                 <PodiumCard user={topThree[1]} isSecond getRankIcon={getRankIcon} />
               </div>
             )}
             
-            {/* 1st Place - Center (Bigger) */}
+            {/* 1st Place - Center (Bigger) (order-2 on both mobile and desktop) */}
             {topThree[0] && (
-              <div className="order-1 sm:order-2 flex justify-center">
+              <div className="order-2 flex justify-center">
                 <PodiumCard user={topThree[0]} isFirst getRankIcon={getRankIcon} />
               </div>
             )}
             
-            {/* 3rd Place - Right */}
+            {/* 3rd Place - Right (order-3 on both mobile and desktop) */}
             {topThree[2] && (
-              <div className="order-3 sm:order-3 flex justify-center">
+              <div className="order-3 flex justify-center">
                 <PodiumCard user={topThree[2]} isThird getRankIcon={getRankIcon} />
               </div>
             )}
@@ -192,7 +193,7 @@ const PodiumCard = ({ user, isFirst, isSecond, isThird, getRankIcon }) => {
           </p>
         </div>
         {user.rank === 1 && (
-          <div className="mt-2 sm:mt-3"> {/* Adjusted margin-top */}
+          <div className="mt-2 sm:mt-3 flex justify-center"> {/* Added flex justify-center */}
             <span className="inline-flex items-center px-2 sm:px-3 py-0.5 sm:py-1 rounded-full text-xs font-bold bg-white bg-opacity-20 text-white"> {/* Adjusted padding */}
               👑 Champion
             </span>
