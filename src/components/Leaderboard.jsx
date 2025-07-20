@@ -41,24 +41,24 @@ const Leaderboard = ({ users }) => {
           
           {/* Podium Layout - 1st in middle, 2nd left, 3rd right */}
           {/* Using grid for responsive column layout and order for visual podium effect */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 items-end">
-            {/* 2nd Place - Left (appears second on mobile, first column on desktop) */}
+          <div className="grid grid-cols-3 gap-4 mb-8 items-end"> {/* Changed to grid-cols-3 for mobile, adjusted gap */}
+            {/* 2nd Place - Left */}
             {topThree[1] && (
-              <div className="order-2 sm:order-1 flex justify-center">
+              <div className="order-2 sm:order-1 flex justify-center"> {/* Order for mobile stacking */}
                 <PodiumCard user={topThree[1]} isSecond getRankIcon={getRankIcon} />
               </div>
             )}
             
-            {/* 1st Place - Center (appears first on mobile, second column on desktop) */}
+            {/* 1st Place - Center (Bigger) */}
             {topThree[0] && (
-              <div className="order-1 sm:order-2 flex justify-center">
+              <div className="order-1 sm:order-2 flex justify-center"> {/* Order for mobile stacking */}
                 <PodiumCard user={topThree[0]} isFirst getRankIcon={getRankIcon} />
               </div>
             )}
             
-            {/* 3rd Place - Right (appears third on mobile, third column on desktop) */}
+            {/* 3rd Place - Right */}
             {topThree[2] && (
-              <div className="order-3 sm:order-3 flex justify-center">
+              <div className="order-3 sm:order-3 flex justify-center"> {/* Order for mobile stacking */}
                 <PodiumCard user={topThree[2]} isThird getRankIcon={getRankIcon} />
               </div>
             )}
@@ -142,25 +142,25 @@ const Leaderboard = ({ users }) => {
 const PodiumCard = ({ user, isFirst, isSecond, isThird, getRankIcon }) => {
   const getCardStyle = () => {
     // Base style for all podium cards, ensuring responsiveness
-    let baseStyle = 'w-full max-w-xs mx-auto'; // w-full for small screens, max-w-xs to cap width on larger screens, mx-auto for centering
+    let baseStyle = 'w-full'; // Ensures cards take full width of their grid column
 
     if (isFirst) {
-      return `${baseStyle} bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white transform scale-110 shadow-2xl border-4 border-yellow-300`;
+      return `${baseStyle} bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white shadow-2xl border-4 border-yellow-300`;
     } else if (isSecond) {
-      return `${baseStyle} bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 text-white transform scale-105 shadow-xl border-4 border-gray-200 mt-4 sm:mt-8`; // Added margin-top for podium effect
+      return `${baseStyle} bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 text-white shadow-xl border-4 border-gray-200 mt-4 sm:mt-8`; // Added margin-top for podium effect
     } else if (isThird) {
       return `${baseStyle} bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg border-4 border-orange-300 mt-4 sm:mt-8`; // Added margin-top for podium effect
     }
     return `${baseStyle} bg-white border border-gray-200`;
   };
 
-  const avatarSize = isFirst ? 'w-24 h-24' : 'w-20 h-20';
-  const nameSize = isFirst ? 'text-2xl' : 'text-xl';
-  const pointsSize = isFirst ? 'text-4xl' : 'text-3xl';
-  const padding = isFirst ? 'p-8' : 'p-6';
+  const avatarSize = isFirst ? 'w-20 h-20' : 'w-16 h-16'; // Slightly reduced avatar size for smaller cards
+  const nameSize = isFirst ? 'text-xl' : 'text-lg'; // Slightly reduced name size
+  const pointsSize = isFirst ? 'text-3xl' : 'text-2xl'; // Slightly reduced points size
+  const padding = isFirst ? 'p-6' : 'p-4'; // Reduced padding for smaller cards
 
   return (
-    <div className={`${padding} rounded-2xl text-center transition-all duration-500 hover:shadow-2xl hover:scale-105 relative overflow-hidden ${getCardStyle()}`}>
+    <div className={`${padding} rounded-2xl text-center transition-all duration-500 relative overflow-hidden ${getCardStyle()}`}> {/* Removed hover animations */}
       {/* Decorative background pattern */}
       <div className="absolute inset-0 opacity-10">
         <div className="absolute top-0 right-0 w-20 h-20 rounded-full bg-white transform translate-x-8 -translate-y-8"></div>
@@ -179,8 +179,8 @@ const PodiumCard = ({ user, isFirst, isSecond, isThird, getRankIcon }) => {
             alt={user.name}
             className={`${avatarSize} rounded-full mx-auto border-4 border-white shadow-xl object-cover ring-4 ring-white ring-opacity-50`}
           />
-          <div className="absolute -top-2 -right-2 w-8 h-8 bg-white rounded-full flex items-center justify-center shadow-lg">
-            <span className="text-sm font-bold text-gray-800">#{user.rank}</span>
+          <div className="absolute -top-2 -right-2 w-7 h-7 bg-white rounded-full flex items-center justify-center shadow-lg"> {/* Adjusted size */}
+            <span className="text-xs font-bold text-gray-800">#{user.rank}</span> {/* Adjusted font size */}
           </div>
         </div>
         <h3 className={`font-bold ${nameSize} mb-2 drop-shadow-sm`}>{user.name}</h3>
