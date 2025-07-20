@@ -2,8 +2,6 @@
 
 A modern, real-time points claiming and ranking system built with React.js frontend and Node.js backend. Users can claim random points and compete on a dynamic leaderboard with beautiful trophy-themed UI.
 
-![Points Arena](https://images.pexels.com/photos/1404819/pexels-photo-1404819.jpeg?auto=compress&cs=tinysrgb&w=800&h=400&fit=crop)
-
 ## 🏆 Features
 
 ### Core Functionality
