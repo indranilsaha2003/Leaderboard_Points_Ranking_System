@@ -18,21 +18,8 @@ const Leaderboard = ({ users }) => {
     }
   };
 
-  const getRankStyle = (rank) => {
-    switch (rank) {
-      case 1:
-        return 'bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white transform scale-110 shadow-2xl border-4 border-yellow-300';
-      case 2:
-        return 'bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 text-white transform scale-105 shadow-xl border-4 border-gray-200';
-      case 3:
-        return 'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg border-4 border-orange-300';
-      default:
-        return 'bg-white border border-gray-200';
-    }
-  };
-
   return (
-    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+    <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100 font-inter">
       <div className="flex items-center gap-3 mb-6">
         <div className="p-2 bg-gradient-to-r from-orange-500 to-yellow-500 rounded-lg">
           <Trophy className="w-6 h-6 text-white" />
@@ -53,25 +40,26 @@ const Leaderboard = ({ users }) => {
           </h3>
           
           {/* Podium Layout - 1st in middle, 2nd left, 3rd right */}
-          <div className="flex flex-col xs:flex-row items-end justify-center gap-4 mb-8 px-2 flex-wrap sm:flex-nowrap">
-            {/* 2nd Place - Left */}
+          {/* Using grid for responsive column layout and order for visual podium effect */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-8 items-end">
+            {/* 2nd Place - Left (appears second on mobile, first column on desktop) */}
             {topThree[1] && (
-              <div className="order-1 sm:order-1 w-full sm:w-auto">
-                <PodiumCard user={topThree[1]} isSecond />
+              <div className="order-2 sm:order-1 flex justify-center">
+                <PodiumCard user={topThree[1]} isSecond getRankIcon={getRankIcon} />
               </div>
             )}
             
-            {/* 1st Place - Center (Bigger) */}
+            {/* 1st Place - Center (appears first on mobile, second column on desktop) */}
             {topThree[0] && (
-              <div className="order-2 sm:order-2 w-full sm:w-auto">
-                <PodiumCard user={topThree[0]} isFirst />
+              <div className="order-1 sm:order-2 flex justify-center">
+                <PodiumCard user={topThree[0]} isFirst getRankIcon={getRankIcon} />
               </div>
             )}
             
-            {/* 3rd Place - Right */}
+            {/* 3rd Place - Right (appears third on mobile, third column on desktop) */}
             {topThree[2] && (
-              <div className="order-3 sm:order-3 w-full sm:w-auto">
-                <PodiumCard user={topThree[2]} isThird />
+              <div className="order-3 sm:order-3 flex justify-center">
+                <PodiumCard user={topThree[2]} isThird getRankIcon={getRankIcon} />
               </div>
             )}
           </div>
@@ -89,7 +77,7 @@ const Leaderboard = ({ users }) => {
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-gray-300 to-transparent"></div>
           </div>
           <div className="space-y-4">
-            {remaining.map((user, index) => (
+            {remaining.map((user) => (
               <div
                 key={user._id}
                 className="group flex items-center gap-6 p-5 bg-gradient-to-r from-gray-50 to-white rounded-xl border border-gray-200 hover:border-orange-300 hover:shadow-lg transition-all duration-300 hover:scale-[1.02]"
@@ -151,29 +139,19 @@ const Leaderboard = ({ users }) => {
 };
 
 // Podium Card Component
-const PodiumCard = ({ user, isFirst, isSecond, isThird }) => {
+const PodiumCard = ({ user, isFirst, isSecond, isThird, getRankIcon }) => {
   const getCardStyle = () => {
-    if (isFirst) {
-      return 'bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white transform scale-110 shadow-2xl border-4 border-yellow-300 sm:w-80 w-full';
-    } else if (isSecond) {
-      return 'bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 text-white transform scale-105 shadow-xl border-4 border-gray-200 sm:w-72 w-full mt-4 sm:mt-8';
-    } else if (isThird) {
-      return 'bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg border-4 border-orange-300 sm:w-72 w-full mt-4 sm:mt-8';
-    }
-    return 'bg-white border border-gray-200';
-  };
+    // Base style for all podium cards, ensuring responsiveness
+    let baseStyle = 'w-full max-w-xs mx-auto'; // w-full for small screens, max-w-xs to cap width on larger screens, mx-auto for centering
 
-  const getRankIcon = (rank) => {
-    switch (rank) {
-      case 1:
-        return <Crown className="w-6 h-6 text-yellow-500" />;
-      case 2:
-        return <Medal className="w-6 h-6 text-gray-400" />;
-      case 3:
-        return <Award className="w-6 h-6 text-orange-600" />;
-      default:
-        return null;
+    if (isFirst) {
+      return `${baseStyle} bg-gradient-to-br from-yellow-400 via-yellow-500 to-yellow-600 text-white transform scale-110 shadow-2xl border-4 border-yellow-300`;
+    } else if (isSecond) {
+      return `${baseStyle} bg-gradient-to-br from-gray-300 via-gray-400 to-gray-500 text-white transform scale-105 shadow-xl border-4 border-gray-200 mt-4 sm:mt-8`; // Added margin-top for podium effect
+    } else if (isThird) {
+      return `${baseStyle} bg-gradient-to-br from-orange-400 via-orange-500 to-orange-600 text-white shadow-lg border-4 border-orange-300 mt-4 sm:mt-8`; // Added margin-top for podium effect
     }
+    return `${baseStyle} bg-white border border-gray-200`;
   };
 
   const avatarSize = isFirst ? 'w-24 h-24' : 'w-20 h-20';
