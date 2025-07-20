@@ -53,7 +53,7 @@ const Leaderboard = ({ users }) => {
           </h3>
           
           {/* Podium Layout - 1st in middle, 2nd left, 3rd right */}
-          <div className="flex flex-col sm:flex-row items-end justify-center gap-4 mb-8 px-2">
+          <div className="flex flex-col xs:flex-row items-end justify-center gap-4 mb-8 px-2 flex-wrap sm:flex-nowrap">
             {/* 2nd Place - Left */}
             {topThree[1] && (
               <div className="order-1 sm:order-1 w-full sm:w-auto">
