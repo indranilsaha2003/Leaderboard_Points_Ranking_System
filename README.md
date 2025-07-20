@@ -2,7 +2,7 @@
 
 A modern, real-time points claiming and ranking system built with React.js frontend and Node.js backend. Users can claim random points and compete on a dynamic leaderboard with beautiful trophy-themed UI.
 
-## Live Link
+## Live Link URL
 
 https://pointsrankingsystem.netlify.app/
 
@@ -161,7 +161,7 @@ The system automatically creates 10 default users on first startup:
 1. Build the project: `npm run build`
 2. Deploy the `dist` folder to your hosting platform
 
-### Backend (Heroku/Railway)
+### Backend (Render/Heroku/Railway)
 1. Set environment variables on your hosting platform
 2. Deploy the server code
 3. Update frontend API URLs to point to your deployed backend
@@ -186,10 +186,6 @@ The system automatically creates 10 default users on first startup:
 3. Commit changes: `git commit -m 'Add feature'`
 4. Push to branch: `git push origin feature-name`
 5. Submit a pull request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## 🆘 Support
 
