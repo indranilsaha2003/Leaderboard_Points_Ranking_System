@@ -18,18 +18,24 @@ function App() {
     fetchUsers();
   }, []);
 
-  const fetchUsers = async () => {
+  const fetchUsers = async (retryCount = 3, delay = 1000) => {
     try {
       const response = await fetch(import.meta.env.VITE_API_BASE_URL + '/users');
+      if (!response.ok) throw new Error('Server not ready');
       const data = await response.json();
       setUsers(data);
       if (data.length > 0 && !selectedUser) {
         setSelectedUser(data[0]);
       }
     } catch (error) {
-      console.error('Error fetching users:', error);
+      if (retryCount > 0) {
+        setTimeout(() => fetchUsers(retryCount - 1, delay), delay);
+      } else {
+        console.error('Error fetching users:', error);
+      }
     }
   };
+
 
   const handleClaimPoints = async () => {
     if (!selectedUser) return;
