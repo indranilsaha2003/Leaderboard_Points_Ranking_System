@@ -6,6 +6,8 @@ A modern, real-time points claiming and ranking system built with React.js front
 
 https://pointsrankingsystem.netlify.app/
 
+(you might have to initially wait for few seconds for data to load. Keep refreshing page until preloaded data appears)
+
 ## 🏆 Features
 
 ### Core Functionality
